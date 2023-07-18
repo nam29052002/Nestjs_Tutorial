@@ -1,0 +1,37 @@
+# compiled output
+bai1/dist
+bai1/node_modules
+bai1/.gitignore
+bai1/.git/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# OS
+.DS_Store
+
+# Tests
+bai1/coverage
+bai1/.nyc_output
+
+# IDEs and editors
+bai1/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
