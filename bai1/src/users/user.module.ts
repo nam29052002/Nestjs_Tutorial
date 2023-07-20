@@ -3,12 +3,15 @@ import { UserController } from "./user.controller";
 import { UserService } from "./user.service";
 import { UserMockService } from "./user-mock.service";
 import { StoreConfig } from "../store/store.config"
-import { StoreService } from "./store.service";
+import { StoreService } from "../store/store.service";
+import { StoreModule } from "src/store/store.module";
+import { LoggerCustomService } from "src/logger/logger-custom.service";
+import { SecurityCustomService } from "./security.service";
 
 function createStore(storeConfig: StoreConfig): StoreService {
     // logic...
-    console.log('Line 10 user.module: ', storeConfig);
-    return new StoreService();
+    console.log('Line 11 user.module: ', storeConfig);
+    return new StoreService(storeConfig);
 }
 
 @Module({
@@ -23,8 +26,8 @@ function createStore(storeConfig: StoreConfig): StoreService {
         {
             provide: 'STORE_CONFIG',
             useValue: {
-                dir: 'store',
-                path: 'user'
+                dirname: 'store',
+                filename: 'data.json'
             } as StoreConfig
         },
         {
@@ -36,8 +39,13 @@ function createStore(storeConfig: StoreConfig): StoreService {
                     optional: true
                 }
             ]
-        }
-    ]
+        },
+        LoggerCustomService,
+        SecurityCustomService
+    ],
+    imports: [StoreModule.forFeature({
+        filename: 'user.json'
+    })]
 })
 export class UserModule {
 

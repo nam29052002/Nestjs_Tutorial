@@ -2,17 +2,23 @@ import { Body, Controller, Get, Param, Post, ParseIntPipe, UsePipes, ValidationP
 import { UserDTO } from "./user.dto";
 import { UserService } from "./user.service";
 import { ModuleRef } from "@nestjs/core";
+import { LoggerCustomService } from "src/logger/logger-custom.service";
 
-@Controller('user/nam')
+@Controller('bai1/user')
 export class UserController {
 
-    constructor(@Inject('USER_SERVICE') private readonly userService: UserService) {}
+    constructor(@Inject('USER_SERVICE') private readonly userService: UserService,
+                private readonly loggerCustomService: LoggerCustomService) {
+        
+        console.log(userService.getLogger() === loggerCustomService);
+    }
     // constructor(private readonly modulRef: ModuleRef) {}
 
     @UsePipes(new ValidationPipe()) // controller pipe
     @Post()
     createUser(@Body() user: UserDTO): UserDTO {
         // return this.modulRef.get('USER_SERVICE').createUser(user);
+        console.log(this.loggerCustomService.log());
         return this.userService.createUser(user);
     }
 
@@ -29,5 +35,10 @@ export class UserController {
             username: 'namnamnam',
             password: '123456'
         };
+    }
+
+    @Get()
+    tesLog(): any {
+        return [this.loggerCustomService.log(), this.userService.getLogger().log()];
     }
 }
