@@ -1,0 +1,121 @@
+{
+    "users": [
+        {
+            "username": "nam test 1",
+            "password": "12345678",
+            "firstName": "nguyen ngoc",
+            "lastName": "nam1",
+            "email": "nam@test1.nestjs",
+            "img": "nam_test1.jpg",
+            "id": 1
+        },
+        {
+            "username": "nam test 2",
+            "password": "12345678",
+            "firstName": "nguyen ngoc",
+            "lastName": "nam2",
+            "email": "nam@test2.nestjs",
+            "img": "nam_test2.jpg",
+            "id": 2
+        },
+        {
+            "username": "nam test 3",
+            "password": "12345678",
+            "firstName": "nguyen ngoc",
+            "lastName": "nam3",
+            "email": "nam@test3.nestjs",
+            "img": "nam_test3.jpg",
+            "id": 3
+        },
+        {
+            "username": "nam test 4",
+            "password": "12345678",
+            "firstName": "nguyen ngoc",
+            "lastName": "nam4",
+            "email": "nam@test4.nestjs",
+            "img": "nam_test4.jpg",
+            "id": 4
+        },
+        {
+            "username": "nam test 5",
+            "password": "12345678",
+            "firstName": "nguyen ngoc",
+            "lastName": "nam5",
+            "email": "nam@test5.nestjs",
+            "img": "nam_test5.jpg",
+            "id": 5
+        },
+        {
+            "username": "nam test 6",
+            "password": "12345678",
+            "firstName": "nguyen ngoc",
+            "lastName": "nam6",
+            "email": "nam@test6.nestjs",
+            "img": "nam_test6.jpg",
+            "id": 6
+        },
+        {
+            "username": "nam test 7",
+            "password": "12345678",
+            "firstName": "nguyen ngoc",
+            "lastName": "nam7",
+            "email": "nam@test7.nestjs",
+            "img": "nam_test7.jpg",
+            "id": 7
+        },
+        {
+            "username": "nam test 8",
+            "password": "12345678",
+            "firstName": "nguyen ngoc",
+            "lastName": "nam8",
+            "email": "nam@test8.nestjs",
+            "img": "nam_test8.jpg",
+            "id": 8
+        },
+        {
+            "username": "nam test 9",
+            "password": "12345678",
+            "firstName": "nguyen ngoc",
+            "lastName": "nam9",
+            "email": "nam@test9.nestjs",
+            "img": "nam_test9.jpg",
+            "id": 9
+        },
+        {
+            "username": "nam test 10",
+            "password": "12345678",
+            "firstName": "nguyen ngoc",
+            "lastName": "nam10",
+            "email": "nam@test10.nestjs",
+            "img": "nam_test10.jpg",
+            "id": 10
+        },
+        {
+            "username": "nam test 11",
+            "password": "12345678",
+            "firstName": "nguyen ngoc",
+            "lastName": "nam11",
+            "email": "nam@test11.nestjs",
+            "img": "nam_test11.jpg",
+            "id": 11
+        },
+        {
+            "username": "nam test 12",
+            "password": "12345678",
+            "firstName": "nguyen ngoc",
+            "lastName": "nam 12",
+            "email": "nam12@test.nestjs",
+            "img": "nam_test12.jpg",
+            "id": 12
+        },
+        {
+            "username": "nam test 13",
+            "password": "12345678",
+            "firstName": "nguyen ngoc",
+            "lastName": "nam 13",
+            "email": "nam13@test.nestjs",
+            "img": "nam_test13.jpg",
+            "id": 13
+        }
+    ]
+}
