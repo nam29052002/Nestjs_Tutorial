@@ -1,8 +1,7 @@
 import { HttpException, Injectable } from "@nestjs/common";
 import { SanPhamRepository } from "./sanpham.repository";
-import { SanPhamDTO } from "./sanpham.dto";
+import { SanPhamChiTietDTO, SanPhamDTO } from "./sanpham.dto";
 import { SanPham } from "./sanpham.entity";
-import { SanPhamChiTietDTO } from "./sanpham.chi-tiet.dto";
 
 @Injectable()
 export class SanPhamService {
@@ -11,25 +10,30 @@ export class SanPhamService {
     async getSanPhamBanChayNhat(): Promise<SanPhamDTO[]> {
         const resultSet = await this.sanPhamRepsitory.getSanPhamBanChayNhat();
         return resultSet.map(item => {
-            const sanPham: SanPham = SanPham.toSanPhamEnity(item);
-            return SanPham.mapToSanPhamDTO(sanPham);
+            return SanPham.mapToSanPhamDTO(item);
         });
     }
 
     async getSanPhamDuocYeuThichNhat(): Promise<SanPhamDTO[]> {
         const resultSet = await this.sanPhamRepsitory.getSanPhamDuocYeuThichNhat();
         return resultSet.map(item => {
-            const sanPham: SanPham = SanPham.toSanPhamEnity(item);
-            return SanPham.mapToSanPhamDTO(sanPham);
+            return SanPham.mapToSanPhamDTO(item);
         });
     }
 
     async getChiTietSanPhamById(id: number): Promise<SanPhamChiTietDTO> {
         const listItem = await this.sanPhamRepsitory.getUserById(id);
         if (listItem.length == 0) {
-            throw new HttpException(JSON.stringify({ statusCode: 500, message: 'ID san pham khong ton tai' }), 500);
+            throw new HttpException('Id san pham khong ton tai', 500);
         }
-        const sanPham: SanPham = SanPham.toSanPhamEnity(listItem[0]);
+        const sanPham: SanPham = listItem[0];
         return SanPham.mapToSanPhamChiTietDTO(sanPham);
+    }
+
+    async timKiemSanPhamByTen(tenSanPham: string, page: number): Promise<SanPhamDTO[]> {
+        const resultSet = await this.sanPhamRepsitory.timKiemSanPhamByTen(tenSanPham, page);
+        return resultSet.map(item => {
+            return SanPham.mapToSanPhamDTO(item);
+        });
     }
 }

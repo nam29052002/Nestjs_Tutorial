@@ -1,9 +1,8 @@
 import { Controller, Get, Param, ParseIntPipe, Query, UseFilters } from "@nestjs/common";
-import { SanPhamDTO } from "./sanpham.dto";
-import { SanPhamChiTietDTO } from "./sanpham.chi-tiet.dto";
+import { SanPhamChiTietDTO, SanPhamDTO } from "./sanpham.dto";
 import { IsNotEmpty } from "class-validator";
 import { SanPhamService } from "./sanpham.service";
-import { SanPhamHandlerException } from "./sanpham.filter";
+import { SanPhamHandlerException } from "../filter/sanpham.filter";
 
 @Controller('api/san-pham')
 export class SanPhamController {
@@ -20,14 +19,15 @@ export class SanPhamController {
         return this.sanPhamSerVice.getSanPhamDuocYeuThichNhat();
     }
 
-    @UseFilters(SanPhamHandlerException)
+    @UseFilters(new SanPhamHandlerException(('Can not parse number beacasue id is not number type')))
+    @Get('tim-kiem')
+    timKiemSanPham(@Query('ten') tenSanPham: string, @Query('page', ParseIntPipe) page: number): Promise<SanPhamDTO[]> {
+        return this.sanPhamSerVice.timKiemSanPhamByTen(tenSanPham, page);
+    }
+
+    @UseFilters(new SanPhamHandlerException(('Can not parse number beacasue id is not number type')))
     @Get(':id')
     chiTietSanPham(@Param('id', ParseIntPipe) id: number): Promise<SanPhamChiTietDTO> {
         return this.sanPhamSerVice.getChiTietSanPhamById(id);
     }
-
-    // @Get('tim-kiem')
-    // timKiemSanPham(@Query('ten') tenSanPham: string): Promise<SanPhamDTO[]> {
-    //     return this.sanPhamSerVice.timKiemSanPhamByTen(ten);
-    // }
 }

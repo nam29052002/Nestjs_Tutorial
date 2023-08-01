@@ -6,11 +6,7 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { SanPham } from "./sanpham.entity";
 
 @Module({
-    providers: [
-        SanPhamService,
-        SanPhamRepository,
-        
-    ],
+    providers: [SanPhamService, SanPhamRepository],
     imports: [
         TypeOrmModule.forFeature([SanPham])
     ],

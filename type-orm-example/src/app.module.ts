@@ -2,21 +2,20 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { SanPhamModule } from './sanpham/sanpham.module';
-import { SanPham } from './sanpham/sanpham.entity';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { typeormConfigAsync } from './database-connect/database-connect.config';
+import { AuthModule } from './authen/authen.module';
 
 @Module({
-  imports: [SanPhamModule,
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: 'localhost',
-      port: 5432,
-      username: 'postgres',
-      password: '12345678',
-      database: 'fruitshop',
-      entities: [SanPham],
-      synchronize: false,
-    })
+  imports: [
+    SanPhamModule,
+    ConfigModule.forRoot({
+      envFilePath: '.env',
+      ignoreEnvFile: false
+    }),
+    TypeOrmModule.forRootAsync(typeormConfigAsync),
+    AuthModule
   ],
   controllers: [AppController],
   providers: [AppService],

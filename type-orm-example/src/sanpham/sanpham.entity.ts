@@ -1,6 +1,5 @@
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
-import { SanPhamDTO } from "./sanpham.dto";
-import { SanPhamChiTietDTO } from "./sanpham.chi-tiet.dto";
+import { SanPhamChiTietDTO, SanPhamDTO } from "./sanpham.dto";
 
 @Entity({name: 'user'})
 export class SanPham {
@@ -8,7 +7,7 @@ export class SanPham {
     @PrimaryGeneratedColumn({name: 'id'})
     id: number;
 
-    @Column({name: 'ten'})
+    @Column({name: 'ten', length: 255})
     tenSanPham: string;
 
     soSaoVoteTrungBinh: number;
@@ -21,33 +20,33 @@ export class SanPham {
     @Column({name: 'tien_tren_don_vi'})
     giaSanPham: number;
 
-    @Column({name: 'don_vi'})
+    @Column({name: 'don_vi', length: 255})
     donVi: string;
 
-    @Column({name: 'nguon_goc'})
+    @Column({name: 'nguon_goc', length: 255})
     nguonGoc: string;
 
     tinhTrang: string;
 
-    @Column({name: 'so_luong_ten_don_vi'})
+    @Column({name: 'so_luong_ten_don_vi', length: 255})
     soLuongTrenDonVi: string;
 
-    @Column({name: 'tom_tat'})
+    @Column({name: 'tom_tat', length: 2000})
     tomTat: string;
 
-    @Column({name: 'vi'})
+    @Column({name: 'vi', length: 255})
     vi: string;
 
-    @Column({name: 'dinh_duong'})
+    @Column({name: 'dinh_duong', length: 2000})
     dinhDuong: string;
 
-    @Column({name: 'bao_quan'})
+    @Column({name: 'bao_quan', length: 1000})
     baoQuan: string;
 
-    @Column({name: 'anh'})
+    @Column({name: 'anh', length: 255})
     anh: string;
 
-    @Column({name: 'phan_loai'})
+    @Column({name: 'phan_loai', length: 45})
     phanLoai: string;
 
     static mapToSanPhamDTO(sanPham: SanPham): SanPhamDTO {
