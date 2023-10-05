@@ -1,41 +1,55 @@
-import { Body, Controller, Get, Post } from "@nestjs/common";
-import { AuthService } from "./authen.service";
-import { ConfigService } from "@nestjs/config";
-import { Bcrypt } from "src/utils/utils.bcrypt";
-import { UserService } from "src/user/user.service";
-import { UserDTO } from "src/user/user.dto";
-import { HttpCode } from "@nestjs/common/decorators";
+import {
+  Body,
+  Controller,
+  Get,
+  HttpException,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
+import { AuthenService } from './authen.service';
+import { ConfigService } from '@nestjs/config';
+import { Bcrypt } from '../utils/utils.bcrypt';
+import { Req } from '@nestjs/common/decorators';
+import { Request } from 'express';
+import { JwtBlaclistService } from './blacklist/jwt.blacklist.service';
+import { AuthGuard } from '@nestjs/passport';
+import { JwtBlaclistGuard } from './blacklist/jwt.blacklist.guard';
 
 @Controller('auth')
-export class AuthController {
+export class AuthenController {
+  constructor(
+    configService: ConfigService,
+    private readonly authenService: AuthenService,
+    private readonly backlistService: JwtBlaclistService,
+  ) {
+    Bcrypt.SALT_ROUND = parseInt(
+      configService.get<string>('BCRYPT_SALT_ROUND'),
+    );
+  }
 
-    constructor(
-        private readonly authService: AuthService,
-        private readonly configService: ConfigService,
-        private readonly userService: UserService
-    ) {
-        Bcrypt.SALT = this.configService.get<number>('BCRYPT_SALT');
-    }
+  @Post('login')
+  async login(
+    @Body() obj: any,
+  ): Promise<{ accessToken: string; refreshToken: string }> {
+    return await this.authenService.checkLogin(obj.email, obj.password);
+  }
 
-    @Post('login')
-    @HttpCode(200)
-    async login(
-        @Body('email') email: string,
-        @Body('password') password: string
-    ): Promise<{ accessToken: string } | { errorMessage: string }> {
-        if (email == null || password == null) {
-            return Promise.resolve({ errorMessage: 'username or password is not null' });
-        }
-        var userDTO: UserDTO = null;
-        userDTO = await this.userService.getUserByEmail(email, true);
-        if (userDTO == null) {
-            return new Promise(function(resolve, reject) {
-                resolve({ errorMessage: 'email is not register' });
-            });
-        }
-        if (Bcrypt.compare(password, userDTO.matKhau)) {
-            return await this.authService.generateToken(userDTO.id, userDTO.email, (userDTO.vaiTro == 'a') ? true : false);
-        }
-        return { errorMessage: 'password is not correct' };
+  @Get('logout')
+  @UseGuards(AuthGuard('jwt'), JwtBlaclistGuard)
+  async logout(@Req() request: Request): Promise<{ status: string }> {
+    const token = request.headers.authorization?.split(' ')[1];
+    if (token && this.backlistService.tokenInBlacklist(token)) {
+      this.backlistService.destroyToken(token);
+      return { status: 'Logout success' };
     }
+    throw new HttpException('Access denied!', 403);
+  }
+
+  @Post('refresh-token')
+  async refreshToken(
+    @Body('accessToken') accessToken: string,
+    @Body('refreshToken') refreshToken: string,
+  ): Promise<{ accessToken: string; refreshToken: string }> {
+    return await this.authenService.refreshToken(accessToken, refreshToken);
+  }
 }

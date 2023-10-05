@@ -1,11 +1,10 @@
-import { Expose } from "class-transformer";
-import { IsNotEmpty, Length, Matches, Max, Min } from "class-validator";
+import { Expose, Transform } from "class-transformer";
+import { IsNotEmpty, Length, Matches } from "class-validator";
 
 export class UserDTO {
     @Expose()
-    @IsNotEmpty()
     id: number;
-    
+
     @Expose()
     @IsNotEmpty()
     @Length(1, 30)
@@ -13,24 +12,23 @@ export class UserDTO {
 
     @Expose()
     @IsNotEmpty()
-    @Length(1, 20)
+    @Length(1, 50)
     @Matches(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)
     email: string;
 
     @IsNotEmpty()
     @Length(8)
-    @Matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/)
+    @Matches(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/)
     matKhau: string;
 
     @Expose()
     anh: string = null;
 
+    @Transform(({ obj }) => obj.vaiTro = 'u')
     @Expose()
     @Length(1, 1)
-    vaiTro: string = 'u';
+    vaiTro: string;
 
     @Expose()
-    @Min(0)
-    @Max(1)
     trangThai: number = 0;
 }

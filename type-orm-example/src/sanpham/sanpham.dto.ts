@@ -1,55 +1,86 @@
-import { IsNotEmpty, Length, Max, Min } from "class-validator";
+import { Expose } from 'class-transformer';
+import { IsInt, IsNotEmpty, Length, Max, Min } from 'class-validator';
+import { DanhGiaResponseDTO } from 'src/danhgia/danhgia.dto';
 
 export class SanPhamDTO {
-    id: number;
+  id: number;
 
-    @IsNotEmpty()
-    @Length(1, 30)
-    tenSanPham: string;
+  @IsNotEmpty()
+  @Length(1, 30)
+  @Expose()
+  tenSanPham: string;
 
-    soSaoVoteTrungBinh: number;
+  @Expose()
+  soSaoVoteTrungBinh: number;
 
-    soLuongBan: number;
+  @Expose()
+  @IsInt()
+  soLuongBan: number;
 
-    @IsNotEmpty()
-    @Max(2000000)
-    @Min(20000)
-    giaSanPham: number;
+  @IsNotEmpty()
+  @Max(2000000)
+  @Min(20000)
+  @Expose()
+  @IsInt()
+  giaSanPham: number;
 
-    @IsNotEmpty()
-    @Length(5, 15)
-    donVi: string;
+  @IsNotEmpty()
+  @Length(5, 15)
+  @Expose()
+  donVi: string;
 
-    @IsNotEmpty()
-    anh: string;
+  @IsNotEmpty()
+  @Expose()
+  anh: string;
 }
 
 export class SanPhamChiTietDTO extends SanPhamDTO {
-    id: number;
+  @Length(5, 15)
+  @IsNotEmpty()
+  @Expose()
+  nguonGoc: string;
 
-    @Length(5, 15)
-    @IsNotEmpty()
-    nguonGoc: string;
+  @Expose()
+  tinhTrang: string;
 
-    tinhTrang: string;
+  @Length(5, 20)
+  @IsNotEmpty()
+  @Expose()
+  soLuongTrenDonVi: string;
 
-    @Length(5, 20)
-    @IsNotEmpty()
-    soLuongTrenDonVi: string;
+  @Min(0)
+  @Max(10000)
+  @IsInt()
+  soLuongNhap: number;
 
-    @IsNotEmpty()
-    @Length(1, 1000)
-    tomTat: string;
+  @IsNotEmpty()
+  @Length(1, 1000)
+  @Expose()
+  tomTat: string;
 
-    @IsNotEmpty()
-    @Length(1, 100)
-    vi: string;
+  @IsNotEmpty()
+  @Length(1, 100)
+  @Expose()
+  vi: string;
 
-    @IsNotEmpty()
-    @Length(1, 100)
-    dinhDuong: string;
+  @IsNotEmpty()
+  @Length(1, 100)
+  @Expose()
+  dinhDuong: string;
 
-    @IsNotEmpty()
-    @Length(1, 1000)
-    baoQuan: string;
+  @IsNotEmpty()
+  @Length(1, 1000)
+  @Expose()
+  baoQuan: string;
+
+  @IsNotEmpty()
+  @Length(1, 100)
+  @Expose()
+  phanLoai: string;
+}
+
+export class SanPhamTestResponseDTO {
+  id: number;
+  tenSanPham: string;
+  listDanhGia: DanhGiaResponseDTO[];
 }
